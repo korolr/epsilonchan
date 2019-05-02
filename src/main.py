@@ -21,7 +21,7 @@ async def wshandle(request):
 
     return ws
 
-connect('project1', host='mongo', port=27017, username='rosot', password='example')
+connect('project1', host='mongo', port=27017, username='root', password='example')
 
 
 app = web.Application()
