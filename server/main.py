@@ -44,4 +44,4 @@ app.add_routes([web.get('/', handle),
                 web.get('/echo', wshandle),
                 web.get('/{name}', handle)])
 
-web.run_app(app, port=8000)
+web.run_app(app, port=7000)

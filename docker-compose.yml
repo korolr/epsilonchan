@@ -20,8 +20,9 @@ services:
       - ./docker/nginx:/etc/nginx/conf.d
     # и nginx зависит от контейнера python. Т.е. python должен быть запущен первым
     depends_on:
-      - python
-  python:
+      - client
+      - server
+  server:
     restart: always
     # указываем откуда собирать образ
     build:
@@ -29,13 +30,25 @@ services:
       dockerfile: docker/python/Dockerfile
     # монтируем директорию проекта
     volumes:
-      - ./src:/srv/www/src
+      - ./server:/srv/www/src
+    expose:
+      - 7000
+    ports:
+      - 7000:7000
+    # запускаем
+    command: "python3 ./main.py"
+  client:
+    build:
+      context: .
+      dockerfile: docker/elm/Dockerfile
+    restart: always
     expose:
       - 8000
     ports:
-      - 8000:8000
-    # запускаем
-    command: "python3 ./main.py"
+      - "8000:8000"
+    volumes:
+      - ./client:/srv/www/src
+    command: "elm reactor --port 8000"
   mongo:
     image: mongo
     restart: always
