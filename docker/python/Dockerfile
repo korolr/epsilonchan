@@ -1,4 +1,4 @@
-FROM python:3.6
+FROM python:3.7.3-alpine3.9
 
 COPY ./src /srv/www/src
 WORKDIR /srv/www/src

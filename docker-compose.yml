@@ -1,6 +1,5 @@
 version: "3"
 
-
 services:
   nginx:
     # при падении будет стараться подняться
@@ -44,9 +43,6 @@ services:
       - 27017:27017
     volumes:
       - /data/db
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
   mongo-express:
     image: mongo-express
     restart: always

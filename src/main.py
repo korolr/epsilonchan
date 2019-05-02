@@ -1,6 +1,6 @@
 # examples/server_simple.py
 from aiohttp import web
-from mongoengine import connect
+from mongoengine import *
 
 async def handle(request):
     name = request.match_info.get('name', "Anonymous")
@@ -21,8 +21,23 @@ async def wshandle(request):
 
     return ws
 
-connect('project1', host='mongo', port=27017, username='root', password='example')
+connect('config', host='mongo', port=27017)
 
+class BlogPost(Document):
+    title = StringField(required=True, max_length=200)
+    tags = ListField(StringField(max_length=50))
+    meta = {'allow_inheritance': True}
+
+class TextPost(BlogPost):
+    content = StringField(required=True)
+
+class LinkPost(BlogPost):
+    url = StringField(required=True)
+
+# Create a text-based post
+post1 = TextPost(title='Using MongoEngine', content='See the tutorial')
+post1.tags = ['mongodb', 'mongoengine']
+post1.save()
 
 app = web.Application()
 app.add_routes([web.get('/', handle),
