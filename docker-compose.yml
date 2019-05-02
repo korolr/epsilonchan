@@ -1,0 +1,60 @@
+version: "3"
+
+# хранилища
+volumes:
+  pgdata:
+    driver: local
+services:
+  nginx:
+    # при падении будет стараться подняться
+    restart: always
+    # только свежий nginx
+    image: nginx:latest
+    # слушает порт 8080
+    expose:
+      - 8080
+    # мапаем порт 80 на его 8080. Тогда сайт будет доступен по адресу localhost. Убедись, что порт у тебя не занят.
+    ports:
+      - "80:8080"
+    # монтируем только те директории, в которых лежит статика, т.к. nginx с динамикой не будет работать. Также директорию с логами и файл настройки, который мы подготовили.
+    volumes:
+      - ./src/static:/srv/www/src/static
+      - ./src/media:/srv/www/src/media
+      - ./src/logs:/srv/www/src/logs
+      - ./docker/nginx:/etc/nginx/conf.d
+    # и nginx зависит от контейнера python. Т.е. python должен быть запущен первым
+    depends_on:
+      - python
+  python:
+    restart: always
+    # указываем откуда собирать образ
+    build:
+      context: .
+      dockerfile: docker/python/Dockerfile
+    # монтируем директорию проекта
+    volumes:
+      - ./src:/srv/www/src
+    expose:
+      - 8000
+    ports:
+      - 8000:8000
+    # запускаем
+    command: "python3 ./main.py"
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - /data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
