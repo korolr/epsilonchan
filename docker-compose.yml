@@ -1,9 +1,6 @@
 version: "3"
 
-# хранилища
-volumes:
-  pgdata:
-    driver: local
+
 services:
   nginx:
     # при падении будет стараться подняться
