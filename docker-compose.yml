@@ -2,6 +2,7 @@ version: "3"
 
 services:
   nginx:
+    hostname: nginx
     # при падении будет стараться подняться
     restart: always
     # только свежий nginx
@@ -30,14 +31,14 @@ services:
       dockerfile: docker/python/Dockerfile
     # монтируем директорию проекта
     volumes:
-      - ./server:/srv/www/src
+      - .:/srv/www/src
     expose:
       - 7000
     ports:
       - 7000:7000
-    # запускаем
-    command: "python3 ./main.py"
+    command: "python3 /srv/www/src/main.py"
   client:
+    hostname: frontend
     build:
       context: .
       dockerfile: docker/elm/Dockerfile
@@ -45,11 +46,12 @@ services:
     expose:
       - 8000
     ports:
-      - "8000:8000"
+      - 8000:8000
     volumes:
       - ./client:/srv/www/src
     command: "elm reactor --port 8000"
   mongo:
+    hostname: mongo
     image: mongo
     restart: always
     ports:
@@ -57,10 +59,8 @@ services:
     volumes:
       - /data/db
   mongo-express:
+    hostname: mongo-express
     image: mongo-express
     restart: always
     ports:
       - 8081:8081
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: example
