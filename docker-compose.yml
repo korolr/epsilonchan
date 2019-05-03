@@ -27,16 +27,15 @@ services:
     restart: always
     # указываем откуда собирать образ
     build:
-      context: .
+      context: ./server
       dockerfile: docker/python/Dockerfile
     # монтируем директорию проекта
     volumes:
-      - .:/srv/www/src
+      - ./server:/srv/www/src
     expose:
       - 7000
     ports:
       - 7000:7000
-    command: "python3 /srv/www/src/main.py"
   client:
     hostname: frontend
     build:
