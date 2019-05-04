@@ -18,10 +18,11 @@ services:
       - client
       - server
   server:
+    # hard start: docker-compose up --no-deps --force-recreate --build server
     restart: always
     build:
-      context: .
-      dockerfile: docker/python/Dockerfile
+      context: ./server
+      dockerfile: Dockerfile
     volumes:
       - ./server:/srv/www/src
     expose:
