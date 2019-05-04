@@ -2,7 +2,11 @@ import sys
 
 from aiohttp import web
 from aiohttp_graphql import GraphQLView
-from schema import schema
+# todo fix later
+if sys.platform == 'win32':
+    from server.schema import schema
+else:
+    from schema import schema
 
 app = web.Application()
 GraphQLView.attach(app, schema=schema, graphiql=True)
