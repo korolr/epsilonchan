@@ -1,13 +1,17 @@
 import sys
-
 from aiohttp import web
 from aiohttp_graphql import GraphQLView
-from schema import schema
-import uvloop
+if sys.platform == 'win32':
+    from server.schema import schema
+else:
+    from schema import schema
 
-uvloop.install()
+if sys.platform != 'win32':
+    import uvloop
+    uvloop.install()
 
 app = web.Application()
 GraphQLView.attach(app, schema=schema, graphiql=True)
 
-web.run_app(app, port=7000) 
+if __name__ == '__main__':
+    web.run_app(app, port=7000)
