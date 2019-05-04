@@ -26,4 +26,4 @@ class MongoClient:
         return self.database[collection]
 
 
-mongo = MongoClient('production', host='127.0.0.1', port=27017)
+mongo = MongoClient('production', host='mongo', port=27017)

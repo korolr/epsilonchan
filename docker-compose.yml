@@ -3,39 +3,32 @@ version: "3"
 services:
   nginx:
     hostname: nginx
-    # при падении будет стараться подняться
     restart: always
-    # только свежий nginx
     image: nginx:latest
-    # слушает порт 8080
     expose:
       - 8080
-    # мапаем порт 80 на его 8080. Тогда сайт будет доступен по адресу localhost. Убедись, что порт у тебя не занят.
     ports:
       - "80:8080"
-    # монтируем только те директории, в которых лежит статика, т.к. nginx с динамикой не будет работать. Также директорию с логами и файл настройки, который мы подготовили.
     volumes:
-      - ./src/static:/srv/www/src/static
-      - ./src/media:/srv/www/src/media
-      - ./src/logs:/srv/www/src/logs
+      - ./server/static:/srv/www/src/static
+      - ./server/media:/srv/www/src/media
+      - ./server/logs:/srv/www/src/logs
       - ./docker/nginx:/etc/nginx/conf.d
-    # и nginx зависит от контейнера python. Т.е. python должен быть запущен первым
     depends_on:
       - client
       - server
   server:
     restart: always
-    # указываем откуда собирать образ
     build:
-      context: ./server
+      context: .
       dockerfile: docker/python/Dockerfile
-    # монтируем директорию проекта
     volumes:
       - ./server:/srv/www/src
     expose:
       - 7000
     ports:
       - 7000:7000
+    command: "python3 main.py"
   client:
     hostname: frontend
     build:
@@ -48,7 +41,9 @@ services:
       - 8000:8000
     volumes:
       - ./client:/srv/www/src
-    command: "elm reactor --port 8000"
+      - /srv/www/src/node_modules
+      - /srv/www/src/dist
+    command: "npm run server"
   mongo:
     hostname: mongo
     image: mongo
@@ -61,5 +56,8 @@ services:
     hostname: mongo-express
     image: mongo-express
     restart: always
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: username
+      ME_CONFIG_BASICAUTH_PASSWORD: password
     ports:
       - 8081:8081
