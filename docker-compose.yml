@@ -10,8 +10,6 @@ services:
     ports:
       - "80:8080"
     volumes:
-      - ./server/static:/srv/www/src/static
-      - ./server/media:/srv/www/src/media
       - ./server/logs:/srv/www/src/logs
       - ./nginx:/etc/nginx/conf.d
     depends_on:
