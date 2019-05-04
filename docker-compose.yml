@@ -10,10 +10,8 @@ services:
     ports:
       - "80:8080"
     volumes:
-      - ./server/static:/srv/www/src/static
-      - ./server/media:/srv/www/src/media
       - ./server/logs:/srv/www/src/logs
-      - ./docker/nginx:/etc/nginx/conf.d
+      - ./nginx:/etc/nginx/conf.d
     depends_on:
       - client
       - server
@@ -33,8 +31,8 @@ services:
   client:
     hostname: frontend
     build:
-      context: .
-      dockerfile: docker/elm/Dockerfile
+      context: ./client
+      dockerfile: Dockerfile
     restart: always
     expose:
       - 8000

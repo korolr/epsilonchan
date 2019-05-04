@@ -1,6 +1,6 @@
 FROM mhart/alpine-node:12
 
-COPY ./client /srv/www/src
+COPY . /srv/www/src
 WORKDIR /srv/www/src
 
 RUN npm -g config set user root
