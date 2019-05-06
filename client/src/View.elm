@@ -42,5 +42,5 @@ renderRoute model =
         GraphPage ->
             Html.map MsgForGraph (Graph.View.view model.graph)
 
-        UrlPage ->
-            Html.map MsgForUrl (Url.View.view model.url)
+        UrlPage id ->
+            Html.map MsgForUrl (Url.View.view model.url id)

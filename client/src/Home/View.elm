@@ -44,13 +44,13 @@ view model =
                     [ text "Graph" ]
                 ]
             , Grid.col
-                [ Col.xs2 ]
+                [ Col.xs4 ]
                 [ Button.linkButton
                     [ Button.block
                     , Button.large
-                    , Button.attrs [ class "nes-btn is-primary", href "url" ]
+                    , Button.attrs [ class "nes-btn is-primary", href "url/5" ]
                     ]
-                    [ text "url" ]
+                    [ text "Go to /url/5" ]
                 ]
             ]
         ]

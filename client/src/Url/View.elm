@@ -10,10 +10,11 @@ import Html.Events exposing (onClick)
 import Url.Types exposing (..)
 
 
-view : Model -> Html Msg
-view model =
+view : Model -> String -> Html Msg
+view model id =
     Grid.container [] <|
         [ h2 [] [ text "Url" ]
+        , h3 [] [ text  id ]
         , Button.button
             [ Button.success
             , Button.large

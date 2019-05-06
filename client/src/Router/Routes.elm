@@ -1,7 +1,7 @@
 module Router.Routes exposing (Page(..), routes, toPath)
 
 import Browser.Navigation
-import Url.Parser exposing ((</>), Parser, map, oneOf, parse, s, top)
+import Url.Parser exposing ((</>), Parser, map, oneOf, parse, s, string, top)
 
 
 type Page
@@ -10,7 +10,7 @@ type Page
     | CatsPage
     | CounterPage
     | GraphPage
-    | UrlPage
+    | UrlPage String
 
 
 routes : Parser (Page -> a) a
@@ -21,7 +21,7 @@ routes =
         , map CatsPage (s "cats")
         , map CounterPage (s "counter")
         , map GraphPage (s "graph")
-        , map UrlPage (s "url")
+        , map UrlPage (s "url" </> string)
         ]
 
 
@@ -43,5 +43,5 @@ toPath page =
         GraphPage ->
             "/graph"
 
-        UrlPage ->
-            "/url"
+        UrlPage id ->
+            "/url/" ++ id
