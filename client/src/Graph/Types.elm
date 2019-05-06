@@ -6,5 +6,5 @@ type alias Model =
 
 
 type Msg
-    = Increment
-    | Decrement
+    = Inc
+    | Dec

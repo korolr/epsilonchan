@@ -10,6 +10,7 @@ type Page
     | CatsPage
     | CounterPage
     | GraphPage
+    | UrlPage
 
 
 routes : Parser (Page -> a) a
@@ -20,6 +21,7 @@ routes =
         , map CatsPage (s "cats")
         , map CounterPage (s "counter")
         , map GraphPage (s "graph")
+        , map UrlPage (s "url")
         ]
 
 
@@ -40,3 +42,6 @@ toPath page =
 
         GraphPage ->
             "/graph"
+
+        UrlPage ->
+            "/url"

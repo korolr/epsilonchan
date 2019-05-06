@@ -1,31 +1,31 @@
-module Graph.Update exposing (init, update)
+module Url.Update exposing (init, update)
 
-import Graph.Types exposing (..)
 import RemoteData exposing (..)
 import Return exposing (Return, return)
 import Types
+import Url.Types exposing (..)
 
 
 init : Return Msg Model
 init =
-    return 228 Cmd.none
+    return 1337 Cmd.none
 
 
 update : Types.Msg -> Model -> Return Msg Model
 update msgFor model =
     case msgFor of
-        Types.MsgForGraph msg ->
-            updateGraph msg model
+        Types.MsgForUrl msg ->
+            updateUrl msg model
 
         _ ->
             return model Cmd.none
 
 
-updateGraph : Msg -> Model -> Return Msg Model
-updateGraph msg model =
+updateUrl : Msg -> Model -> Return Msg Model
+updateUrl msg model =
     case msg of
-        Inc ->
+        Increment ->
             return (model + 1) Cmd.none
 
-        Dec ->
+        Decrement ->
             return (model - 1) Cmd.none

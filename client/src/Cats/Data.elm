@@ -1,4 +1,4 @@
-module Cats.Data exposing (..)
+module Cats.Data exposing (decodeGifUrl, getRandomGif)
 
 import Cats.Types exposing (..)
 import Http
@@ -10,7 +10,7 @@ getRandomGif : String -> Cmd Msg
 getRandomGif topic =
     let
         url =
-            "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=" ++ topic
+            "https://api.giphy.com/v1/gifs/random?api_key=ZcvmJHY7JaG8neEwYJSTSKiuOJFUu9Bv&tag=" ++ topic
 
         returnMsg =
             RemoteData.fromResult >> NewGif

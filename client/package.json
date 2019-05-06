@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "parcel server -p 8000 index.html",
+    "start": "parcel server -p 8050 index.html",
     "build": "parcel build index.html",
     "server": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"

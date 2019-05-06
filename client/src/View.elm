@@ -13,11 +13,12 @@ import Router.Routes exposing (..)
 import Router.Types exposing (Msg(..))
 import Styles
 import Types exposing (..)
+import Url.View
 
 
 view : Model -> Browser.Document Types.Msg
 view model =
-    { title = "projectname"
+    { title = "epsillonchan"
     , body =
         [ Element.layout [] <|
             el [ width (px 800), centerX ] (renderRoute model)
@@ -36,6 +37,7 @@ renderRoute model =
                     [ link ([ padding 7 ] ++ Styles.button ++ [ Element.htmlAttribute (class "nes-btn is-primary") ]) { url = toPath CatsPage, label = text "Go to Cats" }
                     , link ([ padding 7 ] ++ Styles.button ++ [ Element.htmlAttribute (class "nes-btn is-primary") ]) { url = toPath CounterPage, label = text "Go to Counter" }
                     , link ([ padding 7 ] ++ Styles.button ++ [ Element.htmlAttribute (class "nes-btn is-primary") ]) { url = toPath GraphPage, label = text "Go to Graph" }
+                    , link ([ padding 7 ] ++ Styles.button ++ [ Element.htmlAttribute (class "nes-btn is-primary") ]) { url = toPath UrlPage, label = text "url" }
                     ]
                 ]
 
@@ -50,3 +52,6 @@ renderRoute model =
 
         GraphPage ->
             Element.map MsgForGraph (Graph.View.view model.graph)
+
+        UrlPage ->
+            Element.map MsgForUrl (Url.View.view model.url)

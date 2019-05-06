@@ -4,6 +4,7 @@ import Cats.Types
 import Counter.Types
 import Graph.Types
 import Router.Types
+import Url.Types
 
 
 type alias Model =
@@ -11,6 +12,7 @@ type alias Model =
     , cats : Cats.Types.Model
     , counter : Counter.Types.Model
     , graph : Graph.Types.Model
+    , url : Url.Types.Model
     }
 
 
@@ -19,3 +21,4 @@ type Msg
     | MsgForCats Cats.Types.Msg
     | MsgForCounter Counter.Types.Msg
     | MsgForGraph Graph.Types.Msg
+    | MsgForUrl Url.Types.Msg
