@@ -14,7 +14,7 @@ view : Model -> String -> Html Msg
 view model id =
     Grid.container [] <|
         [ h2 [] [ text "Url" ]
-        , h3 [] [ text  id ]
+        , h3 [] [ text id ]
         , Button.button
             [ Button.success
             , Button.large
