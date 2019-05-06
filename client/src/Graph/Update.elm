@@ -1,5 +1,6 @@
 module Graph.Update exposing (init, update)
 
+import Graph.Data exposing (..)
 import Graph.Types exposing (..)
 import RemoteData exposing (..)
 import Return exposing (Return, return)
@@ -8,7 +9,7 @@ import Types
 
 init : Return Msg Model
 init =
-    return 228 Cmd.none
+    return RemoteData.Loading makeRequest
 
 
 update : Types.Msg -> Model -> Return Msg Model
@@ -24,8 +25,5 @@ update msgFor model =
 updateGraph : Msg -> Model -> Return Msg Model
 updateGraph msg model =
     case msg of
-        Inc ->
-            return (model + 1) Cmd.none
-
-        Dec ->
-            return (model - 1) Cmd.none
+        GotResponse response ->
+            ( response, Cmd.none )

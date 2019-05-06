@@ -1,32 +1,36 @@
 module Graph.View exposing (view)
 
-import Bootstrap.Button as Button
 import Bootstrap.Grid as Grid
-import Bootstrap.Grid.Col as Col
-import Bootstrap.Grid.Row as Row
 import Graph.Types exposing (..)
 import Html exposing (..)
-import Html.Attributes exposing (..)
-import Html.Events exposing (onClick)
+import RemoteData exposing (RemoteData)
 
 
 view : Model -> Html Msg
 view model =
     Grid.container [] <|
-        [ h2 [] [ text "Graph" ]
-        , Button.button
-            [ Button.success
-            , Button.large
-            , Button.block
-            , Button.attrs [ class "nes-btn is-primary", onClick Inc ]
-            ]
-            [ text "+" ]
-        , h3 [] [ text (String.fromInt model) ]
-        , Button.button
-            [ Button.success
-            , Button.large
-            , Button.block
-            , Button.attrs [ class "nes-btn is-primary", onClick Dec ]
-            ]
-            [ text "-" ]
+        [ case model of
+            RemoteData.Loading ->
+                text "Loading"
+
+            RemoteData.Failure e ->
+                text "Something went wrong"
+
+            RemoteData.NotAsked ->
+                text "Request has not been made yet"
+
+            RemoteData.Success response ->
+                case response of
+                    Just user ->
+                        div []
+                            [ h2
+                                []
+                                [ text user.name ]
+                            , h2
+                                []
+                                [ text (Maybe.withDefault "User has no homePlanet" user.homePlanet) ]
+                            ]
+
+                    Nothing ->
+                        text "No user was found with that name"
         ]
