@@ -10,7 +10,7 @@ getRandomGif : String -> Cmd Msg
 getRandomGif topic =
     let
         url =
-            "https://api.giphy.com/v1/gifs/random?api_key=ZcvmJHY7JaG8neEwYJSTSKiuOJFUu9Bv&tag=" ++ topic
+            "https://api.giphy.com/v1/gifs/random?api_key=FEe5q0lLI4NdoNyvOxOu3GnzL46pOziEv&tag=" ++ topic
 
         returnMsg =
             RemoteData.fromResult >> NewGif
