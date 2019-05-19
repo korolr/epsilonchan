@@ -1,21 +1,10 @@
-module Styles exposing (button, title)
+module Styles exposing (myRedClass)
 
-import Element exposing (..)
-import Element.Background as Background
-import Element.Border as Border
-import Element.Font as Font
-import Html.Attributes exposing (class)
+import Html.Attributes exposing (..)
 
 
-title : List (Attr () msg)
-title =
-    [ Font.size 44
-    , Border.width 22
-    , Border.solid
-    , Border.color (rgb 234 111 123)
+myRedClass =
+    [ style "background-color" "red"
+    , style "height" "90px"
+    , style "width" "100%"
     ]
-
-
-button : List (Attr decorative msg)
-button =
-    []

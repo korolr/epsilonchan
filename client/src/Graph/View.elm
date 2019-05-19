@@ -1,17 +1,36 @@
 module Graph.View exposing (view)
 
-import Element exposing (..)
-import Element.Events exposing (..)
-import Element.Input exposing (button)
+import Bootstrap.Grid as Grid
 import Graph.Types exposing (..)
-import RemoteData exposing (..)
-import Styles
+import Html exposing (..)
+import RemoteData exposing (RemoteData)
 
 
-view : Model -> Element Msg
+view : Model -> Html Msg
 view model =
-    row [ centerY, spacing 5 ]
-        [ button ([ padding 5 ] ++ Styles.button) { onPress = Just Decrement, label = text "-" }
-        , text (String.fromInt model)
-        , button ([ padding 5 ] ++ Styles.button) { onPress = Just Increment, label = text "+" }
+    Grid.container [] <|
+        [ case model of
+            RemoteData.Loading ->
+                text "Loading"
+
+            RemoteData.Failure e ->
+                text "Something went wrong"
+
+            RemoteData.NotAsked ->
+                text "Request has not been made yet"
+
+            RemoteData.Success response ->
+                case response of
+                    Just user ->
+                        div []
+                            [ h2
+                                []
+                                [ text user.name ]
+                            , h2
+                                []
+                                [ text (Maybe.withDefault "User has no homePlanet" user.homePlanet) ]
+                            ]
+
+                    Nothing ->
+                        text "No user was found with that name"
         ]

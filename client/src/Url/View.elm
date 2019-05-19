@@ -1,21 +1,20 @@
-module Counter.View exposing (view)
+module Url.View exposing (view)
 
 import Bootstrap.Button as Button
 import Bootstrap.Grid as Grid
 import Bootstrap.Grid.Col as Col
 import Bootstrap.Grid.Row as Row
-import Counter.Types exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
-import List exposing (append)
-import Styles exposing (myRedClass)
+import Url.Types exposing (..)
 
 
-view : Model -> Html Msg
-view model =
+view : Model -> String -> Html Msg
+view model id =
     Grid.container [] <|
-        [ h2 [] [ text "Counter" ]
+        [ h2 [] [ text "Url" ]
+        , h3 [] [ text id ]
         , Button.button
             [ Button.success
             , Button.large
@@ -23,7 +22,7 @@ view model =
             , Button.attrs [ class "nes-btn is-primary", onClick Increment ]
             ]
             [ text "+" ]
-        , h3 (append [] myRedClass) [ text (String.fromInt model) ]
+        , h3 [] [ text (String.fromInt model) ]
         , Button.button
             [ Button.success
             , Button.large

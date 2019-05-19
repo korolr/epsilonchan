@@ -1,19 +1,27 @@
 module Cats.View exposing (view)
 
+import Bootstrap.Button as Button
+import Bootstrap.Grid as Grid
+import Bootstrap.Grid.Col as Col
+import Bootstrap.Grid.Row as Row
 import Cats.Types exposing (..)
-import Element exposing (..)
-import Element.Events exposing (..)
-import Element.Input exposing (button)
-import Element.Region exposing (..)
+import Html exposing (..)
+import Html.Attributes exposing (..)
+import Html.Events exposing (onClick)
 import RemoteData exposing (..)
-import Styles
 
 
-view : Model -> Element Msg
+view : Model -> Html Msg
 view model =
-    column [ spacing 5 ]
-        [ el ([ heading 2 ] ++ Styles.title) (text model.topic)
-        , button ([ padding 5 ] ++ Styles.button) { onPress = Just MorePlease, label = text "More Please!" }
+    Grid.container [] <|
+        [ h2 [] [ text "Cats" ]
+        , Button.button
+            [ Button.success
+            , Button.large
+            , Button.block
+            , Button.attrs [ class "nes-btn is-primary", onClick MorePlease ]
+            ]
+            [ text "More Cats!" ]
         , case model.gifUrl of
             NotAsked ->
                 text ""
@@ -22,7 +30,7 @@ view model =
                 text "Loading..."
 
             Success gifUrl ->
-                image [] { src = gifUrl, description = "a random " ++ model.topic ++ " gif" }
+                img [ src gifUrl ] []
 
             Failure _ ->
                 text "Error loading gif"
