@@ -1,5 +1,0 @@
-uvloop; sys.platform != 'win32'
-aiohttp
-motor
-aiohttp-graphql
-graphql-server-core
