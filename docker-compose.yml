@@ -1,5 +1,8 @@
 version: "3"
-
+# хранилища
+volumes:
+  pgdata:
+    driver: local
 services:
   nginx:
     hostname: nginx
@@ -24,10 +27,10 @@ services:
     volumes:
       - ./server:/srv/www/src
     expose:
-      - 7000
+      - 3000
     ports:
-      - 7000:7000
-    command: "python3 main.py"
+      - 3000:3000
+    command: "cabal run"
   client:
     hostname: frontend
     build:
@@ -43,20 +46,14 @@ services:
       - /srv/www/src/node_modules
       - /srv/www/src/dist
     command: "npm run server"
-  mongo:
-    hostname: mongo
-    image: mongo
-    restart: always
+  postgres:
+    image: postgres:9.3.22
     ports:
-      - 27017:27017
-    volumes:
-      - /data/db
-  mongo-express:
-    hostname: mongo-express
-    image: mongo-express
-    restart: always
+      - 5432:5432
     environment:
-      ME_CONFIG_BASICAUTH_USERNAME: username
-      ME_CONFIG_BASICAUTH_PASSWORD: password
-    ports:
-      - 8081:8081
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: postgresql_password
+      POSTGRES_DB: database_name
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - pgdata:/var/lib/postgresql/data
